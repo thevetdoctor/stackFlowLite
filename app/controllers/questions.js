@@ -1,10 +1,15 @@
 // controllers/questions.js
 
-const question = {
-		id: 'questionId',
-		body: "EDUCATION: This is not just about going to school, it's about bringing out your God given potentials, by exposing the light of world class education to the citizens of this state, such that the whole world will look up to Osun state for manpower. You should be qualified to work anywhere in the world with the training you shall get from this state.",
-		user: 'Obafemi'
-	}
+const Question = require('../models/questions');
+const fs = require('fs');
+
+// const question = {
+// 		id: 'questionId',
+// 		body: "EDUCATION: This is not just about going to school, it's about bringing out your God given potentials, by exposing the light of world class education to the citizens of this state, such that the whole world will look up to Osun state for manpower. You should be qualified to work anywhere in the world with the training you shall get from this state.",
+// 		user: 'Obafemi',
+// 		createdDate: new Date()
+// 	}
+
 
 exports.questions_get_all = (req, res, next) => {
 
@@ -33,10 +38,39 @@ exports.questions_get_by_ID = (req, res, next) => {
 
 
 exports.questions_post_question = (req, res, next) => {
+	const question = {
+		id : 1,
+		body : req.body.content,
+		createdDate : new Date()
+	}
+
+
+	fs.readFile('././response.json', 'utf-8', (err, data) => {
+		if(err) console.log(err)
+			// console.log(data)
+		data = JSON.parse(data)
+			// console.log(data)
+		console.log(Object.keys(data))
+
+		let newData = data['question'];
+			   // console.log(newData)
+		    newData.push(question);
+			   console.log(newData)
+
+	fs.writeFile('././response.json', JSON.stringify(newData), 'utf-8', (err, data)=>{
+		if(err){
+			console.log(err)
+			res.status(401).json({
+				message: 'Question not saved'
+			});
+		}
+	  });
+
+	});
 
 	res.status(200).json({
-		message: 'Handling POST requests to /questions',
-		question: question
+		message: 'New question posted',
+		question
 	});
 }
 

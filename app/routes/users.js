@@ -9,7 +9,6 @@ const UsersController = require('../controllers/users');
 
 
 
-
 // router to SIGNUP a new User
 router.post('/auth/signup', UsersController.user_signup);
 

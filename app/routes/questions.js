@@ -37,9 +37,3 @@ router.put('/:questionId/answers/:answerId', checkAuth, QuestionsController.ques
 
 module.exports = router;
 
-
-	// const question = {
-	// 	id: 'questionId',
-	// 	body: "EDUCATION: This is not just about going to school, it's about bringing out your God given potentials, by exposing the light of world class education to the citizens of this state, such that the whole world will look up to Osun state for manpower. You should be qualified to work anywhere in the world with the training you shall get from this state.",
-	// 	user: 'Obafemi'
-	// }

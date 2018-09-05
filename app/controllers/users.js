@@ -5,6 +5,16 @@ const jwt = require('jsonwebtoken');
 const key = require('../checkAuth/codes');
 
 
+const validUser = (user) => {
+	const validEmail = typeof user.email == 'string'
+						&& user.email.trim() != '';
+
+	const validPassword = typeof user.password == 'string'
+						&& user.password.trim().length >= 6;
+
+	return validEmail && validPassword;
+}
+
 
 exports.user_signup = (req, res, next) => {
 	const user = {
@@ -21,7 +31,8 @@ exports.user_signup = (req, res, next) => {
 
 		res.json({
 			message: 'User created',
-			user,
+			user: user.email,
+			password: '******',
 			hash
 		});
 		})
@@ -60,13 +71,3 @@ exports.user_login = (req, res) => {
 	});
 }
 
-
-function validUser(user){
-	const validEmail = typeof user.email == 'string'
-						&& user.email.trim() != '';
-
-	const validPassword = typeof user.password == 'string'
-						&& user.password.trim().length >= 6;
-
-	return validEmail && validPassword;
-}
