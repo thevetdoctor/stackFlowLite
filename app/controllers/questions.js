@@ -1,21 +1,32 @@
 // controllers/questions.js
 
-const Question = require('../models/questions');
-const fs = require('fs');
+const pg = require('pg');
+const jwt = require('jsonwebtoken');
+const config = require('../config');
+const pool = new pg.Pool(config);
+const question = require('../models/questions');
 
-// const question = {
-// 		id: 'questionId',
-// 		body: "EDUCATION: This is not just about going to school, it's about bringing out your God given potentials, by exposing the light of world class education to the citizens of this state, such that the whole world will look up to Osun state for manpower. You should be qualified to work anywhere in the world with the training you shall get from this state.",
-// 		user: 'Obafemi',
-// 		createdDate: new Date()
-// 	}
 
 
 exports.questions_get_all = (req, res, next) => {
+ question.body = req.body.content;
 
-	res.status(200).json({
-		message: 'Handling GET requests to /questions',
-		question: question
+
+ 			pool.connect((err, client, done) => {
+				if(err){
+					return console.error('error fetching ....', err);
+				}
+			client.query('SELECT * FROM questions', (err, result) => {
+				if(err){
+				return console.error('error running query');
+				}
+
+		res.status(200).json({
+			message: 'All questions displayed',
+			questions: result.rows
+		  });
+			done();
+		});
 	});
 }
 
@@ -23,65 +34,75 @@ exports.questions_get_all = (req, res, next) => {
 exports.questions_get_by_ID = (req, res, next) => {
 	const id = req.params.questionId;
 
-	if(id === 'special'){
+
+	pool.connect((err, client, done) => {
+				if(err){
+					return console.error('error fetching ....', err);
+				}
+			client.query('SELECT * FROM questions WHERE id = $1', [id], (err, result) => {
+				if(err){
+				return console.error('error running query');
+				}
+				console.log(result.rows)
 		res.status(200).json({
-			message: 'You discovered the special ID',
-			id: id
-		})
-	} else {
-		res.status(200).json({
-			message: 'You passed an ID',
-			id: id
-		})
-	}
+			message: 'All questions displayed',
+			question: result.rows
+		  });
+			done();
+		});
+	});
 }
 
 
 exports.questions_post_question = (req, res, next) => {
-	const question = {
-		id : 1,
-		body : req.body.content,
-		createdDate : new Date()
-	}
 
+	const decoded = jwt.decode(req.token)
 
-	fs.readFile('././response.json', 'utf-8', (err, data) => {
-		if(err) console.log(err)
-			// console.log(data)
-		data = JSON.parse(data)
-			// console.log(data)
-		console.log(Object.keys(data))
+		question.body = req.body.content;
+		question.user = decoded.user.email;
+		console.log(question.user)
+		console.log(decoded)
 
-		let newData = data['question'];
-			   // console.log(newData)
-		    newData.push(question);
-			   console.log(newData)
+			pool.connect((err, client, done) => {
+				if(err){
+					return console.error('error fetching ....', err);
+				}
+			client.query('INSERT INTO questions (body, useremail) VALUES ($1, $2)', [question.body, question.user], (err, result) => {
+				if(err){
+				return console.error('error running query');
+				}
 
-	fs.writeFile('././response.json', JSON.stringify(newData), 'utf-8', (err, data)=>{
-		if(err){
-			console.log(err)
-			res.status(401).json({
-				message: 'Question not saved'
-			});
-		}
-	  });
-
-	});
-
-	res.status(200).json({
-		message: 'New question posted',
-		question
+		res.status(200).json({
+			message: 'New question posted',
+			question: result.rows
+		  });
+			done();
+		});
 	});
 }
+
 
 
 exports.questions_delete_by_ID = (req, res, next) => {
 	const id = req.params.questionId;
 
-	res.status(200).json({
-			message: 'You deleted question ' + id,
-			id: id
+
+	pool.connect((err, client, done) => {
+				if(err){
+					return console.error('error fetching ....', err);
+				}
+			client.query('DELETE FROM questions WHERE id = $1', [id], (err, result) => {
+				if(err){
+				return console.error('error running query');
+				}
+				console.log(result.rows)
+		res.status(200).json({
+			message: 'All questions displayed',
+			question: result.rows
+		  });
+			done();
 		});
+	});
 }
 
 

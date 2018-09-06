@@ -21,12 +21,3 @@ router.post('/auth/login', UsersController.user_login);
 
 module.exports = router;
 
-
-
-
-// sample User
-	// const newUser = {
-	// 	id: 'userId',
-	// 	username: 'Obafemi',
-	// 	email: 'md@animalworld.com.ng'
-	// }
