@@ -4,13 +4,17 @@
   "description": "note-taking app",
   "main": "server",
   "scripts": {
-    "dev": "nodemon server.js",
-    "start": "nodemon server.js"
+    // "dev": "nodemon server.js",
+    "start": "node server.js"
   },
   "keywords": [
     "notes",
     "notable"
   ],
+  "engines":{
+      "node": "^8.9.4",
+      "npm": "^5.6.0"
+  },
   "author": "animalworldng",
   "license": "ISC",
   "dependencies": {

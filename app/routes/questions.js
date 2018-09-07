@@ -9,7 +9,8 @@ const QuestionsController = require('../controllers/questions');
 
 
 // router for users to GET ALL questions
-router.get('/', checkAuth, QuestionsController.questions_get_all);
+// router.get('/', checkAuth, QuestionsController.questions_get_all);
+router.get('/', QuestionsController.questions_get_all);
 
 
 
@@ -33,13 +34,7 @@ router.post('/:questionId/answers', checkAuth, QuestionsController.questions_pos
 router.put('/:questionId/answers/:answerId', checkAuth, QuestionsController.questions_update_answers_by_ID);
 
 
-const ans = {
-	id: new Number,
-	body: '',
-	poster: '',
-	questID: new Number,
-	date: new Date
-}
+
 
 module.exports = router;
 

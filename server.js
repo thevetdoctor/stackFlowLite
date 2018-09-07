@@ -12,7 +12,7 @@ const morgan = require('morgan');
 
 const app = express();
 
-const port = 8000;
+const port = process.env.port || 8000;
 
 app.listen(port, () => {
   console.log('animalworld server port: ' + port);

@@ -25,30 +25,30 @@ const validUser = (user) => {
 	return validEmail && validPassword;
 }
 
-	const checkDb = (user) => {
+// 	const checkDb = (user) => {
 
-			// console.log(user)
-	 			pool.connect((err, client, done) => {
-					if(err){
-						return console.error('error fetching ....', err);
-					}
-				client.query('SELECT email FROM users', (err, result) => {
-					if(err){
-					return console.error('error running query');
-					}
-					// console.log(result.rows)
-					const emailArray = result.rows.map((val)=> {
-						return val.email.trim()
-					})
-					console.log(emailArray)
-					console.log(user.email)
-					console.log(emailArray.includes(user.email))
+// 			// console.log(user)
+// 	 			pool.connect((err, client, done) => {
+// 					if(err){
+// 						return console.error('error fetching ....', err);
+// 					}
+// 				client.query('SELECT email FROM users', (err, result) => {
+// 					if(err){
+// 					return console.error('error running query');
+// 					}
+// 					// console.log(result.rows)
+// 					const emailArray = result.rows.map((val)=> {
+// 						return val.email.trim()
+// 					})
+// 					console.log(emailArray)
+// 					console.log(user.email)
+// 					console.log(emailArray.includes(user.email))
 
-					done();
-					return emailArray.includes(user.email)
-			});
-		});
-}
+// 					return emailArray.includes(user.email)
+// 					done();
+// 			});
+// 		});
+// }
 
 
 exports.user_signup = (req, res, next) => {
@@ -60,50 +60,72 @@ exports.user_signup = (req, res, next) => {
 
 // check validity of user name & password
 		console.log('Email validating')
-	if(validUser(req.body)){
+
+		if(validUser(req.body)){
+
 		console.log('Email valid')
 
 	// check if email already used
-		if(checkDb(req.body)){
 
-		  	res.status(401).json({
-		  		message: 'Email already used'
-		  	})
-		  }
-		  	else {
-			console.log('New email being registered')
+		pool.connect((err, client, done)=> {
+			if(err){
+				console.log(err);
+			}
+			client.query('SELECT email FROM users', (err, result)=>{
+				if(err){
+					console.log(err)
+				}
+				console.log(result.rows)
+			let newArr = result.rows.map((val)=>{
+				return val.email.trim()
+			})
+				console.log(newArr)
 
-	// encrypt the valid password with BCRYPT
-			bcrypt.hash(req.body.password, 10)
-			.then((hash) => {
+				if(newArr.includes(user.email)){
+
+				  	res.status(401).json({
+				  		message: 'Email already used'
+				  	})
+
+				} else {
+
+					console.log('New email being registered')
+
+				// encrypt the valid password with BCRYPT
+					bcrypt.hash(req.body.password, 10)
+					.then((hash) => {
 
 				// connect to the db and save credentials
-					pool.connect((err, client, done) => {
-							if(err){
-								return console.error('error fetching ....', err);
-							}
-					client.query('INSERT INTO users (name, email, password, hash) VALUES ($1, $2, $3, $4)', [req.body.name, req.body.email, req.body.password, hash ], (err, result) => {
-						if(err){
+				pool.connect((err, client, done) => {
+					if(err){
+					return console.error('error fetching ....', err);
+					}
+				client.query('INSERT INTO users (name, email, password, hash) VALUES ($1, $2, $3, $4)', [req.body.name, req.body.email, req.body.password, hash ], (err, result) => {
+			    		if(err){
 						return console.error('error running query');
 						}
 						console.log(result.rows)
 						console.log('New User created')
-					res.status(200).json({
-						message: 'New User created',
-						user: result.rows,
-						email: user.email
-				  		});
+						res.status(200).json({
+							message: 'New User created',
+								user: result.rows,
+								email: user.email
+					  		});
+						});
+							done();
 					});
-						done();
-				});
-			})
-		  }
+				})
+        	}
+		done();
+		})
+	})
 
-	} else {
+	}
+	  else {
 		// send an error
 		res.status(401).json({
 			message: 'Signup Failed',
-			reasons: 'Password must be not be less than six(6) characters'
+			reasons: 'Invalid Email/Password must be minimum of 6 characters'
 		});
 	}
 
@@ -158,10 +180,13 @@ exports.user_login = (req, res) => {
 								})
 							}
 							// console.log(req.headers['authorization'])
-							res.status(200).json({
+							console.log(token)
+							res.redirect('../../questions').status(200).json({
 								message: 'Token created',
 								token
 							})
+
+
 						});
 						} else {
 							res.status(400).json({
