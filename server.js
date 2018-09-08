@@ -43,6 +43,8 @@ app.use(bodyParser.json());
 
 app.use(morgan('dev'));
 
+app.use('/', questions)
+
 app.use('/questions', questions);
 app.use('/users', users);
 app.use('/answers', answers);
