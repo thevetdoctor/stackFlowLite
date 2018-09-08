@@ -155,18 +155,18 @@ exports.user_login = (req, res) => {
 						}).map((val)=>{
 							return val.trim()
 						});
-						console.log(contain)
+						// console.log(contain)
 
 						if(contain.includes(user.email)){
 
 				          position = contain.indexOf(user.email)
 						}
-						console.log(position)
+						// console.log(position)
 
 				  userArray.push(result.rows[position].email)
 				  userArray.push(result.rows[position].password)
 
-				  	console.log(userArray)
+				  	// console.log(userArray)
 
 				if(user.email == userArray[0].trim()){
 
