@@ -4,8 +4,9 @@
   "description": "note-taking app",
   "main": "server",
   "scripts": {
-    "test":"jasmine",
-    "start": "node server.js"
+    "test": "jasmine",
+    "start": "node server.js",
+    "dev": "node server.js"
   },
   "keywords": [
     "notes",

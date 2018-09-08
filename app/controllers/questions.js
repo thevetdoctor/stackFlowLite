@@ -41,7 +41,8 @@ exports.questions_get_by_ID = (req, res, next) => {
 				if(err){
 					return console.error('error fetching ....', err);
 				}
-			client.query('SELECT * FROM questions WHERE id = $1', [id], (err, result) => {
+			// client.query('SELECT * FROM questions WHERE id = $1', [id], (err, result) => {
+				client.query('select questions.body, questions.useremail, answers.body, answers.poster from questions inner join answers on questions.id = answers.questid', (err, result) => {
 				if(err){
 				return console.error('error running query');
 				}
@@ -141,17 +142,13 @@ exports.questions_post_answers_by_ID = (req, res, next) => {
 					console.log(result.rows)
 
 			res.status(200).json({
-				message: 'New question posted',
+				message: 'New answer posted',
 				answer: result.rows,
 				poster: answer.poster
 			  });
 				done();
 			});
 		});
-	// res.status(200).json({
-	// 	message: 'POST answers to question ' + questionId,
-	// 	answer: answer
-	// });
 }
 
 
