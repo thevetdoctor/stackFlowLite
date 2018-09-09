@@ -189,7 +189,8 @@ exports.user_login = (req, res) => {
 							}
 							// console.log(req.headers['authorization'])
 							console.log(token)
-							res.redirect('../../questions').status(200).json({
+							// res.redirect('../../questions').status(200).json({
+							res.status(200).json({
 								message: 'Token created',
 								token
 							})
