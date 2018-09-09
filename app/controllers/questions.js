@@ -42,7 +42,7 @@ exports.questions_get_by_ID = (req, res, next) => {
 					return console.error('error fetching ....', err);
 				}
 			// client.query('SELECT * FROM questions WHERE id = $1', [id], (err, result) => {
-				client.query('select questions.body, questions.useremail, answers.body, answers.poster from questions inner join answers on questions.id = answers.questid', (err, result) => {
+				client.query('select questions.body, questions.useremail, answers.body, answers.poster, answers.dateposted from questions inner join answers on questions.id = $1', [id], (err, result) => {
 				if(err){
 				return console.error('error running query');
 				}
