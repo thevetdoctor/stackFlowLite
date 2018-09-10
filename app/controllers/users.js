@@ -8,6 +8,7 @@ const pool = new pg.Pool(config);
 const key = require('../checkAuth/codes');
 const user = require('../models/users');
 
+// install --save bcrypt-nodejs && npm uninstall --save bcrypt
 
 const validUser = (user) => {
 
@@ -18,6 +19,7 @@ const validUser = (user) => {
 						// console.log('passed regexp')
 
 	const validPassword = typeof user.password == 'string'
+						&& user.password.trim() != ''
 						&& user.password.trim().length >= 6;
 						// console.log('password valid')
 						// console.log(validEmail)
@@ -144,7 +146,7 @@ exports.user_login = (req, res) => {
 				if(err){
 					console.log(err)
 				}
-				client.query('SELECT email, password FROM users', (err, result) => {
+				client.query('SELECT email, password, hash FROM users', (err, result) => {
 						if(err){
 							console.log(err)
 						}
@@ -155,22 +157,29 @@ exports.user_login = (req, res) => {
 						}).map((val)=>{
 							return val.trim()
 						});
-						console.log(contain)
+						// console.log(contain)
 
 						if(contain.includes(user.email)){
 
 				          position = contain.indexOf(user.email)
 						}
-						console.log(position)
+						// console.log(position)
 
 				  userArray.push(result.rows[position].email)
 				  userArray.push(result.rows[position].password)
+				  userArray.push(result.rows[position].hash)
 
-				  	console.log(userArray)
+				  	// console.log(userArray)
+				  	console.log(result.rows[position].hash)
 
 				if(user.email == userArray[0].trim()){
 
 					if(user.password == userArray[1].trim()){
+
+						bcrypt.compare(user.password, userArray[2].trim())
+							  .then((result)=>{
+							  	if(result){
+
 
 						jwt.sign({user}, key.val, {expiresIn: '1hr'}, (err, token) => {
 							if(err){
@@ -182,10 +191,13 @@ exports.user_login = (req, res) => {
 							// console.log(req.headers['authorization'])
 							console.log(token)
 							res.redirect('../../questions').status(200).json({
+							// res.status(200).json({
 								message: 'Token created',
 								token
 							})
 
+						  })
+					     }
 
 						});
 						} else {

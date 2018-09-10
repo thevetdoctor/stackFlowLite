@@ -7,7 +7,7 @@ const pg = require('pg');
 const MongoClient = require('mongodb').MongoClient;
 const db = require('./config/db');
 const morgan = require('morgan');
-// const cors  = require('cors');
+const cors  = require('cors');
 
 
 const app = express();
@@ -27,23 +27,27 @@ const answers = require('./app/routes/answers');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// app.use(cors({
-// 	credentials : true
-// }))
+// app.use(cors)
+app.use(cors({
+	credentials : true
+}))
 
-// app.use((req, res, next) => {
-// 	res.header("Access-Control-Allow-Origin", "*");
-// 	res.header("Access-Control-Allow-Headers", "*");
-// 	// res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-// 	if(req.method === "OPTIONS"){
-// 		res.header("Access-Control-Allow-Methods", "PUT, POST, PATCH, DELETE, POST");
-// 		return res.status(200).json({});
-// 	}
-// });
+const corsMiddleware = (req, res, next) => {
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Headers", "*");
+	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+	if(req.method === "OPTIONS"){
+		res.header("Access-Control-Allow-Methods", "PUT, POST, PATCH, DELETE, POST");
+		return res.status(200).json({});
+	}
+	next();
+};
 
+
+app.use(corsMiddleware)
 app.use(morgan('dev'));
 
-app.use('/', questions)
+// app.use('/', questions)
 
 app.use('/questions', questions);
 app.use('/users', users);
