@@ -8,6 +8,7 @@ const pool = new pg.Pool(config);
 const key = require('../checkAuth/codes');
 const user = require('../models/users');
 
+// install --save bcrypt-nodejs && npm uninstall --save bcrypt
 
 const validUser = (user) => {
 
@@ -189,8 +190,8 @@ exports.user_login = (req, res) => {
 							}
 							// console.log(req.headers['authorization'])
 							console.log(token)
-							// res.redirect('../../questions').status(200).json({
-							res.status(200).json({
+							res.redirect('../../questions').status(200).json({
+							// res.status(200).json({
 								message: 'Token created',
 								token
 							})
