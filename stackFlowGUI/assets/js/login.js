@@ -1,15 +1,13 @@
+const signUp = document.getElementById('signup');
+const logIn = document.getElementById('login');
+const signupForm = document.getElementById('signupForm');
+const loginForm = document.getElementById('loginForm');
 const submit = document.getElementById('submit');
 let email = document.getElementById('email').value;
 let password = document.getElementById('password').value;
-		const questions = document.getElementById('questions');
+const loginUrl = `${apiUrl}users/auth/login`;
+const questions = document.getElementById('questions');
 
-		questions.innerHTML = '<h3>iii</h3>';
-
-// let email = document.getElementsByTagName('input')[0].value;
-// let password = document.getElementsByTagName('input')[1].value;
-
-// email = email.value;
-// password = password.value;
 
 const user = {
 	email,
@@ -17,14 +15,34 @@ const user = {
 }
 
 
-const loginUrl = `${apiUrl}users/auth/login`;
+	signupForm.style.display = 'none';
+	loginForm.style.display = 'none';
+
+
+const showSignupForm = () => {
+	loginForm.style.display = 'none';
+	signupForm.style.display = 'block';
+}
+
+
+const showLoginForm = () => {
+	signupForm.style.display = 'none';
+	loginForm.style.display = 'block';
+}
+
+
+signUp.addEventListener('click', showSignupForm)
+logIn.addEventListener('click', showLoginForm)
+
+
+	console.log(user);
+	console.log(loginUrl);
+
 
 
 const login = (e) => {
 e.preventDefault()
 
-	console.log(user);
-	console.log(loginUrl);
 
 		const xhttp = new XMLHttpRequest();
 
@@ -33,10 +51,18 @@ e.preventDefault()
 	    // xhttp.withCredentials = true;
 		xhttp.onreadystatechange = function() {
 			if(this.readyState === 4 && this.status === 200){
+
+				loginForm.style.display = 'none';
+
 				let result = this.responseText;
 					result = JSON.parse(result);
 		questions.innerHTML = '<h3>' + result.message + '</h3>';
 					console.log(result);
+		result.questions.forEach((x)=>{
+			questions.innerHTML += `<div class='questDiv'><p>${x.id} : ${x.body}</p>
+								<p class='questAuthor'>posted by: ${x.useremail}</p>
+								<p><input class='questBtn' type='button' value='More...'></p></div>`;
+		})
 
 			}
 		// questions.innerHTML = '';

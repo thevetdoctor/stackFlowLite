@@ -10,33 +10,56 @@
 <body>
 
 	<div class="container">
+		<h2>Welcome to StackFlow-Lite!</h2>
 		<div class="row">
-
-			<h2>Welcome to StackFlow-Lite!</h2>
-
-
-			<div><h3>Home</h3></div>
-			<div class="form">
-
-			<form action="">
-			<div>
-				<div id="error"></div>
-				<label for="email">Email</label>
-				<input id="email" type="text" name="email" placeholder="email" value="x">
-			</div>
-			<div>
-
-				<label for="email">Password</label>
-				<input id="password" type="password" name="password" placeholder="password">
-			</div>
-			<div>
-				<input id="submit" type="submit" name="Submit">
+			<div><h3>Home</h3>
 			</div>
 
-
-			</form>
-
+			<div id="landing">
+				<div id="signup">Signup</div>
+				<div id="login">Login</div>
 			</div>
+
+			<div id="signupForm">
+				<form action="">
+						<div id="error"></div>
+					<div>
+						<label for="name">Name</label>
+						<input id="name" type="text" name="name" placeholder="name">
+					</div>
+					<div>
+						<label for="email">Email</label>
+						<input id="email" type="text" name="email" placeholder="email">
+					</div>
+					<div>
+						<label for="email">Password</label>
+						<input id="password" type="password" name="password" placeholder="password">
+					</div>
+					<div>
+						<input id="submit" type="submit" name="Signup" value="Signup">
+					</div>
+				</form>
+			</div>
+
+
+			<div id="loginForm">
+				<form action="">
+						<div id="error"></div>
+					<div>
+						<label for="email">Email</label>
+						<input id="email" type="text" name="email" placeholder="email">
+					</div>
+					<div>
+						<label for="email">Password</label>
+						<input id="password" type="password" name="password" placeholder="password">
+					</div>
+					<div>
+						<input id="submit" type="submit" name="Login" value="Login">
+					</div>
+				</form>
+
+			<div id="questions"></div>
+
 		</div>
 	</div>
 
