@@ -47,7 +47,11 @@ const corsMiddleware = (req, res, next) => {
 app.use(corsMiddleware)
 app.use(morgan('dev'));
 
-// app.use('/', questions)
+// app.use('/', (req, res, next)=>{
+// 	// res.render(/index)
+// 	next()
+// 	res.end('<h1>Welcome to StackFLowlite ,</h1> <p><i>by animalworldng(thevetdoctor@gmail.com)</p>');
+// })
 
 app.use('/questions', questions);
 app.use('/users', users);
