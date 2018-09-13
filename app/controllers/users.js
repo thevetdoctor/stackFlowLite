@@ -134,7 +134,7 @@ exports.user_signup = (req, res, next) => {
 }
 
 
-exports.user_login = (req, res) => {
+exports.user_login = (req, res, next) => {
 		user.email = req.body.email;
 		user.password = req.body.password;
 		const userArray = [];
@@ -170,7 +170,7 @@ exports.user_login = (req, res) => {
 				  userArray.push(result.rows[position].hash)
 
 				  	// console.log(userArray)
-				  	console.log(result.rows[position].hash)
+				  	console.log(result.rows[position].email)
 
 				if(user.email == userArray[0].trim()){
 
@@ -181,18 +181,32 @@ exports.user_login = (req, res) => {
 							  	if(result){
 
 
-						jwt.sign({user}, key.val, {expiresIn: '1hr'}, (err, token) => {
+						jwt.sign({user}, key.val, {expiresIn: '1min'}, (err, token) => {
 							if(err){
 								res.status(400).json({
 									message: 'authorization failed',
 									token: 'Not authorized'
 								})
 							}
-							// console.log(req.headers['authorization'])
-							console.log(token)
-							res.redirect('../../questions').status(200).json({
-							// res.status(200).json({
-								message: 'Token created',
+
+							// set cookie and store JWT
+							res.cookie(token, {
+								httpOnly: true,
+								secure: true,
+								// signed: true,
+							});
+
+							// console.log('cookie')
+							// console.log(res.cookie)
+							// console.log(window.sessionStorage.token)
+							// console.log(window.sessionStorage.accessToken)
+
+							// window.sessionStorage.token = token;
+
+							// console.log(token)
+							// res.status(200).redirect('../../questions').json({
+							res.status(200).json({
+								message: 'Login successful',
 								token
 							})
 

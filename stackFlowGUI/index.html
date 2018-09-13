@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=0">
+	<title>StackFLowLite</title>
+
+	<link rel="stylesheet" type="text/css" href="view/assets/css/style.css">
+</head>
+<body>
+
+	<div class="container">
+		<h3>Welcome to StackFlow-Lite!</h3>
+		<div class="navbar">
+			<div class="questionsNav nav">Questions</div>
+			<div class="answersNav nav">Answers</div>
+			<div class="questionPost nav">Post a question</div>
+		</div>
+		<div class="row">
+			<!-- <div class="heading"><h3>Home</h3>
+			</div> -->
+
+			<div id="landing">
+				<div id="signup">Signup</div>
+				<div id="login">Login</div>
+			</div>
+						<div id="display"></div>
+
+			<div id="signupForm">
+				<form action="">
+					<div>
+						<label for="name">Name</label>
+						<input id="signupName" type="text" name="name" placeholder="name" required="">
+					</div>
+					<div>
+						<label for="email">Email</label>
+						<input id="signupEmail" type="text" name="email" placeholder="email" required="">
+					</div>
+					<div>
+						<label for="password">Password</label>
+						<input id="signupPassword" type="password" name="password" placeholder="password" required="">
+					</div>
+					<div>
+						<input id="signupBtn" type="submit" name="Signup" value="Signup">
+					</div>
+				</form>
+			</div>
+
+
+			<div id="loginForm">
+				<form action="">
+						<div id="error"></div>
+					<div>
+						<label for="email">Email</label>
+						<input id="loginEmail" type="text" name="email" placeholder="email" required="">
+					</div>
+					<div>
+						<label for="password">Password</label>
+						<input id="loginPassword" type="password" name="password" placeholder="password" required="">
+					</div>
+					<div>
+						<input id="loginBtn" type="submit" name="Login" value="Login">
+					</div>
+				</form>
+
+			<div id="questions"></div>
+
+		</div>
+	</div>
+
+<script src="view/assets/js/questions.js"></script>
+<script src="view/assets/js/shared.js"></script>
+<script src="view/assets/js/login.js"></script>
+</body>
+</html>
