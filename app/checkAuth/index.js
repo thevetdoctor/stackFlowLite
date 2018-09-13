@@ -8,7 +8,9 @@ module.exports = (req, res, next) => {
 
 	let cookies = req.cookies;
 
-	console.log(cookies);
+	// console.log(cookies);
+	// console.log('cookies undefined');
+	console.log(req.headers['authorization']);
 
 	try {
 		const bearerHeader = req.headers['authorization'];
@@ -21,24 +23,28 @@ module.exports = (req, res, next) => {
 		const decoded = jwt.verify(req.token, key.val )
 
 			if(decoded){
-				next({
-					message: 'Authorised',
-					token
-				});
+				next();
 			}
 
 		} else {
-			res.clearCookie();
+
+			// console.log(cookies);
+			// res.clearCookie(token, {
+			// 					httpOnly: true,
+			// 					secure: true,
+			// 				// 	// signed: true,
+			// 				// });
+			// 			})
 
 			res.status(401).json({
-				message: 'No Authorization',
-				cookies
+				message: 'Authentication failed'
+				// cookies
 			})
 		}
 	}
 		catch(error) {
 			return res.status(401).json({
-			message: 'Authentication failed'
+			message: 'Please Login'
 		});
 	}
 }

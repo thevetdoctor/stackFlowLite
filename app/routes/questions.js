@@ -10,7 +10,7 @@ const QuestionsController = require('../controllers/questions');
 
 // router for users to GET ALL questions
 // router.get('/', checkAuth, QuestionsController.questions_get_all);
-router.get('/', QuestionsController.questions_get_all);
+router.get('/', checkAuth, QuestionsController.questions_get_all);
 
 
 

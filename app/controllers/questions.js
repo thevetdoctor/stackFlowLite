@@ -10,7 +10,7 @@ const answer = require('../models/answers');
 
 
 exports.questions_get_all = (req, res, next) => {
- question.body = req.body.content;
+ // question.body = req.body.content;
 
 
  			pool.connect((err, client, done) => {

@@ -7,17 +7,81 @@ const loginForm = document.getElementById('loginForm');
 const signupBtn = document.getElementById('signupBtn');
 const loginBtn = document.getElementById('loginBtn');
 
-const email = document.getElementById('email');
-const password = document.getElementById('password').value;
+const signupName = document.getElementById('signupName');
+const signupEmail = document.getElementById('signupEmail');
+const signupPassword = document.getElementById('signupPassword');
+
+const loginEmail = document.getElementById('loginEmail');
+const loginPassword = document.getElementById('loginPassword');
 
 const signupUrl = `${apiUrl}users/auth/signup`;
 const loginUrl = `${apiUrl}users/auth/login`;
 
 const questions = document.getElementById('questions');
 const display = document.getElementById('display');
+const landing = document.getElementById('landing');
+
+const questNav = document.querySelector('.questionsNav');
+const heading = document.querySelector('.heading');
 
 
-console.log(email.value)
+const questBtn = document.querySelector('.questBtn');
+
+// showQuestions = showQuestions();
+
+
+const viewQuestion = () => {
+
+	if(display.innerText !== 'undefined'){
+
+	let questDiv = questBtn.parentNode();
+		console.log(questDiv)
+	} else {
+
+	return;
+	}
+}
+
+// questBtn.forEach((btn) => {
+// })
+
+// const showQuestions = () => {
+// 	let questUrl = `${apiUrl}questions`;
+// 	let token = window.sessionStorage.token;
+
+
+// 	fetch(questUrl, {
+// 		method: 'GET',
+// 		headers: {
+// 			authorization: `Bearer ${token}`
+// 		}
+// 	})
+// 		.then((response) => {
+// 			return response.json();
+// 		})
+// 		.then((result) => {
+// 			console.log(result);
+// 			landing.style.display = 'none';
+// 			heading.innerText = 'Questions';
+// 			display.innerHTML = '<h3>' + result.message + '</h3>';
+// 					console.log(result);
+// 		result.questions.forEach((x)=>{
+// 			display.innerHTML += `<div class='questDiv'><p>${x.id} : ${x.body}</p>
+// 								<p class='questAuthor'>posted by: ${x.useremail}</p>
+// 								<p><input class='questBtn' type='button' value='More...'></p></div>`;
+// 			})
+// 		})
+// 		.catch((error) => {
+// 			console.log(error);
+// 			landing.style.display = 'block';
+// 			return;
+// 		})
+// }
+
+questNav.addEventListener('click', showQuestions);
+// questBtn.addEventListener('click', viewQuestion);
+
+// console.log(loginEmail.value)
 
 	signupForm.style.display = 'none';
 	loginForm.style.display = 'none';
@@ -44,29 +108,32 @@ logIn.addEventListener('click', showLoginForm)
 const login = (e, url, user) => {
 	e.preventDefault();
 
-	    user = {
-		email: 'oye@oye.com',
-		password: 'oyetoke'
-	}
 
-	console.log(loginUrl)
+	 user = { email: loginEmail.value,
+			  password: loginPassword.value
+			}
+
 	console.log(user)
+
+		// signup.style.display = 'none';
+		login.innerText = 'Logout';
 
 	fetch(loginUrl, {
 		method: 'POST',
-		mode: 'no-cors',
+		// mode: 'no-cors',
 		body: JSON.stringify(user),
 		headers: {
 			'Content-Type': 'application/json'
 			}
-		})
-	.then(res => res.json())
+		}).then(res => res.json())
 	.then((response) => {
 		console.log(response)
 		display.innerHTML = response.message;
-		loginForm.style.display = 'none';
+		window.localStorage.token = response.token;
+		window.sessionStorage.token = response.token;
 	})
-	.catch(error => console.log(error));
+	.catch(error => { console.log(error)})
+		loginForm.style.display = 'none';
 }
 
 
@@ -76,14 +143,16 @@ const signup = (e, url, user) => {
 
 		console.log('Welcome to Stack!');
 	    user = {
-		name: 'oye',
-		email:'oye@oye.com',
-		password: 'oyetoke'
+		name: signupName.value,
+		email: signupEmail.value,
+		password: signupPassword.value
 	}
+
+		console.log(user);
 
 	fetch(signupUrl, {
 		method: 'POST',
-		mode: 'no-cors',
+		// mode: 'no-cors',
 		body: JSON.stringify(user),
 		headers: {
 			'Content-Type': 'application/json'
@@ -95,6 +164,7 @@ const signup = (e, url, user) => {
 		display.innerHTML = response.message;
 	})
 	.catch(error => console.log(error));
+		signupForm.style.display = 'none';
 
 }
 

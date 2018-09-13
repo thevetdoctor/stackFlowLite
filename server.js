@@ -8,6 +8,8 @@ const MongoClient = require('mongodb').MongoClient;
 const db = require('./config/db');
 const morgan = require('morgan');
 const cors  = require('cors');
+const cookieParser = require('cookie-parser');
+
 
 
 const app = express();
@@ -32,6 +34,7 @@ app.use(cors({
 	credentials : true
 }))
 
+app.use(cookieParser('cookieSecret'));
 const corsMiddleware = (req, res, next) => {
 	res.header("Access-Control-Allow-Origin", "*");
 	res.header("Access-Control-Allow-Headers", "*");
@@ -47,15 +50,16 @@ const corsMiddleware = (req, res, next) => {
 app.use(corsMiddleware)
 app.use(morgan('dev'));
 
-// app.use('/', (req, res, next)=>{
-// 	// res.render(/index)
-// 	next()
-// 	res.end('<h1>Welcome to StackFLowlite ,</h1> <p><i>by animalworldng(thevetdoctor@gmail.com)</p>');
-// })
-
 app.use('/questions', questions);
 app.use('/users', users);
 app.use('/answers', answers);
+
+app.use('/', (req, res)=>{
+	// res.render(/index)
+	// next()
+	res.end('<h1>Welcome to StackFLowlite</h1> <p><i>by animalworldng(thevetdoctor@gmail.com)</p>');
+})
+
 
 
 app.use((req, res, next) => {

@@ -6,14 +6,29 @@
 
 
 body {
-	background-color: #09f;
+	/*background-color: #0ff;*/
 	width: 70vw;
 	/*width: 60%;*/
-	margin: 20px auto;
+	margin: 10px auto;
 	font-size: 1.2em;
+	/*line-height: 24px;*/
 	text-align: center;
 	color: #000;
 	font-family: monospace;
+}
+.navbar {
+	display: flex;
+	justify-content: center;
+	/*justify-content: space-around;*/
+}
+
+.nav {
+	padding: 5px;
+	margin: 5px;
+	border: solid #fff 1px;
+	border-radius: 5px;
+	background-color: #000;
+	color: #fff;
 }
 
 #form {
@@ -27,8 +42,8 @@ body {
 
 #display {
 	padding: 10px;
-	color: #666;
-	margin: 10px;
+	color: #000;
+	margin: 5px;
 }
 .container {
 
@@ -91,7 +106,7 @@ input {
 
 #landing {
 	display: flex;
-	flex: column wrap;
+	flex: column nowrap;
 	justify-content: center;
 }
 
