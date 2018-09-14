@@ -20,7 +20,7 @@ const showQuestions = () => {
 		result.questions.forEach((x)=>{
 			display.innerHTML += `<div class='questDiv'><p>${x.id} : ${x.body}</p>
 								<p class='questAuthor'>posted by: ${x.useremail}</p>
-								<p><input class='questBtn' type='button' value='More...'></p></div>`;
+								<p><button class='questBtn' value='More...'></button</p></div>`;
 			})
 		})
 		.catch((error) => {
