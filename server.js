@@ -12,6 +12,7 @@ const cookieParser = require('cookie-parser');
 
 
 
+
 const app = express();
 
 const port = process.env.PORT || 8000;
@@ -22,9 +23,17 @@ app.listen(port, () => {
   });
 
 
+// Set public folder as root
+app.use(express.static('public'));
+
+//Allow front-end access to node_modules folder
+app.use('/scripts', express.static(`${__dirname}/node_modules/`));
+
+
+
 const questions = require('./app/routes/questions');
 const users = require('./app/routes/users');
-const answers = require('./app/routes/answers');
+// const answers = require('./app/routes/answers');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -52,7 +61,7 @@ app.use(morgan('dev'));
 
 app.use('/questions', questions);
 app.use('/users', users);
-app.use('/answers', answers);
+// app.use('/answers', answers);
 
 app.use('/', (req, res)=>{
 	// res.render(/index)
