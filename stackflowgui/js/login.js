@@ -116,7 +116,7 @@ const login = (e, url, user) => {
 	console.log(user)
 
 		// signup.style.display = 'none';
-		login.innerText = 'Logout';
+		login.innerText  = 'Logout';
 
 	fetch(loginUrl, {
 		method: 'POST',

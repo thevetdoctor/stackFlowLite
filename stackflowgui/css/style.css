@@ -6,8 +6,13 @@
 
 
 body {
-	/*background-color: #0ff;*/
-	width: 70vw;
+	/*background-color: rgba(20, 20, 20, 0.7);*/
+	background-image: url(../images/2.jpg);
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-size: all;
+	/*width: 70vw;*/
+	/*height: 80vh;*/
 	/*width: 60%;*/
 	margin: 10px auto;
 	font-size: 1.2em;
@@ -25,10 +30,16 @@ body {
 .nav {
 	padding: 5px;
 	margin: 5px;
-	border: solid #fff 1px;
+	/*border: solid #fff 1px;*/
 	border-radius: 5px;
 	background-color: #000;
 	color: #fff;
+	cursor: pointer;
+}
+
+.nav:hover {
+		background: coral;
+		color: #000;
 }
 
 #form {
@@ -64,7 +75,7 @@ input {
 }
 
 .questDiv {
-		background-color: #069;
+		background-color: #fda;
 		color:#fff;
 		border-radius: 5px;
 		padding: 5px;
@@ -83,7 +94,7 @@ input {
 	font-size: 0.7em;
 }
 
-#signup {
+/*#signup {
 		border: solid #fff 1px;
 		border-radius: 5px;
 		background-color: #000;
@@ -102,7 +113,8 @@ input {
 		padding: 5px;
 
 
-}
+}*/
+
 
 #landing {
 	display: flex;
