@@ -24,7 +24,7 @@ app.listen(port, () => {
 
 
 // Set public folder as root
-app.use(express.static('public'));
+app.use(express.static('stackflowgui'));
 
 //Allow front-end access to node_modules folder
 app.use('/scripts', express.static(`${__dirname}/node_modules/`));
@@ -67,7 +67,7 @@ app.use('/', (req, res)=>{
 	// res.render(/index)
 	// next()
 	// res.end("<h1>Welcome to StackFLowlite</h1> <p><i>by animalworldng(thevetdoctor@gmail.com)</p><p></p><p> - A platform where everyone can ask questions, get answers and also provide responses to other's questions!</p>");
-	res.sendFile('/public');
+	res.sendFile('/stackflowgui');
 })
 
 
